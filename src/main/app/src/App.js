@@ -55,30 +55,20 @@ class App extends Component {
   }
 
   render() {
-    let appName = this.state.loggedUser ? this.state.user.name : "weatherbee";
+    let title = this.state.loggedUser ? this.state.user.name + "'s Board" : "weatherBee";
 
     return (
       <Fragment>
-        <Header appName={appName}/>
+        <Header title={title}/>
         <Grid container spacing={24} justify="center">
           <Grid item xs={12} sm={6}>
-            <Login onLogin={(user) => this.login(user)}/>
+            {
+              this.state.loggedUser ?
+                <div>Hola campeon</div> :
+                <Login onLogin={(user) => this.login(user)}/>
+            }
           </Grid>
         </Grid>
-        {
-          /*
-          this.state.fetchingLocations ?
-            <div>Loading...</div> :
-            <div>
-              Tengo data para usar
-              <button onClick={() => this.login()}>Login</button>
-            </div>
-            */
-          this.state.loggedUser ?
-            <div>Estas logueado</div>
-            :
-            <div>Login plz</div>
-        }
       </Fragment>
     )
   }

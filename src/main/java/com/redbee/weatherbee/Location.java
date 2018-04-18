@@ -1,16 +1,20 @@
 package com.redbee.weatherbee;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
 @Entity
+@Data
 public class Location {
-    private @Id
-    @GeneratedValue Long location_id;
+    @Id
+    @GeneratedValue
+    @Column(name = "location_id")
+    private Long id;
     private String name;
 
     private Location() {}
