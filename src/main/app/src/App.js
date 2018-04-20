@@ -2,10 +2,21 @@ import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 import config from './config';
 import './App.css';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import blue from 'material-ui/colors/blue';
+import teal from 'material-ui/colors/teal';
 import Header from './Components/Header/Header';
 import Login from './Components/Login/Login';
+import Register from './Components/Register/Register';
 
 import Grid from 'material-ui/Grid';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: teal,
+    secondary: blue
+  }
+});
 
 class App extends Component {
   constructor(props) {
@@ -14,11 +25,13 @@ class App extends Component {
       locations: [],
       fetchingLocations: true,
       loggedUser: false,
+      register: false,
       user: {}
     }
   }
 
   componentDidMount() {
+    /*
     axios.get(config.baseUrl + "locations")
     .then(data => {
       console.log(data.locations);
@@ -30,8 +43,10 @@ class App extends Component {
     .catch(err => {
       console.error("Hubo un error en la conexion");
     });
+    */
   }
 
+  /*
   doSomethingAwesome() {
     console.log("Doing awesome stuff");
     axios.post(config.baseUrl + "locations", {
@@ -40,6 +55,7 @@ class App extends Component {
       console.log(res);
     })
   }
+  */
 
   login(userData) {
     axios.post(config.baseUrl + "login", userData)
@@ -54,22 +70,35 @@ class App extends Component {
     })
   }
 
+  showRegister() {
+    this.setState(...this.state, {
+      register: true
+    })
+  }
+
   render() {
     let title = this.state.loggedUser ? this.state.user.name + "'s Board" : "weatherBee";
 
     return (
-      <Fragment>
-        <Header title={title}/>
-        <Grid container spacing={24} justify="center">
-          <Grid item xs={12} sm={6}>
-            {
-              this.state.loggedUser ?
-                <div>Hola campeon</div> :
-                <Login onLogin={(user) => this.login(user)}/>
-            }
+      <MuiThemeProvider theme={theme}>
+        <Fragment>
+          <Header title={title}/>
+          <Grid container spacing={24} justify="center">
+            <Grid item xs={12} sm={8} style={ {padding: "0px 20px"} }>
+              {
+                this.state.register ?
+                  <Register /> :
+                  this.state.loggedUser ?
+                    <div>Hola campeon</div> :
+                    <Login 
+                      onLogin={(user) => this.login(user)}
+                      onRegistry={this.showRegister.bind(this)}
+                    />
+              }
+            </Grid>
           </Grid>
-        </Grid>
-      </Fragment>
+        </Fragment>
+      </MuiThemeProvider>
     )
   }
 }

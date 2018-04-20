@@ -14,8 +14,8 @@ class Login extends Component {
         }
     }
 
-    handleChange = prop => event => {
-        this.setState({ [prop]: event.target.value })
+    handleChange = field => event => {
+        this.setState({ [field]: event.target.value })
     }
 
     logIn() {
@@ -25,11 +25,26 @@ class Login extends Component {
         });
     }
 
+    handleRegistry() {
+        this.props.onRegistry();
+    }
+
+    handleSubmit(e) {
+        //Default del submit es cargar otra pagina
+        e.preventDefault()
+        if(this.props.email && this.props.password) {
+            this.logIn()
+        } else {
+            //Present some error
+            console.error("Email o password vacios")
+        }
+    }
+
     render() {
         return (
-            <Paper>
-                <Typography variant="title" style={ {textAlign: "center"} }>Login</Typography>
-                <form>
+            <Paper style={ {textAlign: "center", marginTop: "20px"} }>
+                <Typography variant="title">Login</Typography>
+                <form onSubmit={this.handleSubmit.bind(this)}>
                     <Grid container spacing={16} justify="center">
                         <Grid item xs={8}>
                             <TextField fullWidth
@@ -43,8 +58,11 @@ class Login extends Component {
                                 type="password"
                                 onChange={this.handleChange('password')}
                             />
-                            <Button variant="raised" color="primary" onClick={this.logIn.bind(this)}>
+                            <Button type="submit" variant="raised" color="primary" onClick={this.logIn.bind(this)}>
                                 Login
+                            </Button>
+                            <Button color="secondary" onClick={this.handleRegistry.bind(this)}>
+                                Don't have an account yet? Register now!
                             </Button>
                         </Grid>
                     </Grid>

@@ -12,7 +12,7 @@ let styles = {
 }
 
 export default props => 
-    <AppBar position="static" color="primary">
+    <AppBar position="static">
         <Toolbar>
             <Typography variant="title" color="inherit" style={ styles.title }>
                 {props.title}
