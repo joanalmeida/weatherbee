@@ -5,6 +5,14 @@ import TextField from 'material-ui/TextField';
 import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
 
+const styles = {
+    form: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+    }
+}
+
 class Login extends Component {
     constructor(props) {
         super(props)
@@ -44,29 +52,29 @@ class Login extends Component {
         return (
             <Paper style={ {textAlign: "center", marginTop: "20px"} }>
                 <Typography variant="title">Login</Typography>
-                <form onSubmit={this.handleSubmit.bind(this)}>
                     <Grid container spacing={16} justify="center">
                         <Grid item xs={8}>
-                            <TextField fullWidth
-                                id="email"
-                                label="Email"
-                                onChange={this.handleChange('email')}
-                            />
-                            <TextField fullWidth
-                                id="password"
-                                label="Password"
-                                type="password"
-                                onChange={this.handleChange('password')}
-                            />
-                            <Button type="submit" variant="raised" color="primary" onClick={this.logIn.bind(this)}>
-                                Login
-                            </Button>
-                            <Button color="secondary" onClick={this.handleRegistry.bind(this)}>
-                                Don't have an account yet? Register now!
-                            </Button>
+                            <form onSubmit={this.handleSubmit.bind(this)} style={ styles.form }>
+                                <TextField fullWidth
+                                    id="email"
+                                    label="Email"
+                                    onChange={this.handleChange('email')}
+                                />
+                                <TextField fullWidth
+                                    id="password"
+                                    label="Password"
+                                    type="password"
+                                    onChange={this.handleChange('password')}
+                                />
+                                <Button type="submit" variant="raised" color="primary" onClick={this.logIn.bind(this)} style={ {width: '30%'} }>
+                                    Login
+                                </Button>
+                                <Button color="secondary" onClick={this.handleRegistry.bind(this)}>
+                                    Don't have an account yet? Register now!
+                                </Button>
+                            </form>
                         </Grid>
                     </Grid>
-                </form>
             </Paper>
         )
     }

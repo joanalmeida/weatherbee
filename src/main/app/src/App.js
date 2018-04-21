@@ -46,23 +46,26 @@ class App extends Component {
     */
   }
 
-  /*
-  doSomethingAwesome() {
-    console.log("Doing awesome stuff");
-    axios.post(config.baseUrl + "locations", {
-      "name": "Vancouver"
-    }).then(res => {
-      console.log(res);
-    })
-  }
-  */
-
   login(userData) {
     axios.post(config.baseUrl + "login", userData)
     .then(res => {
       this.setState(...this.state, {
         loggedUser: true,
         user: res.data
+      })
+    })
+    .catch(err => {
+      console.error(err)
+    })
+  }
+
+  register(userData) {
+    axios.post(config.baseUrl + "register", userData)
+    .then(res => {
+      //TODO: Show a nice registration ok msg
+      console.log("Registration ok")
+      this.setState(...this.state, {
+        register: false
       })
     })
     .catch(err => {
@@ -87,7 +90,9 @@ class App extends Component {
             <Grid item xs={12} sm={8} style={ {padding: "0px 20px"} }>
               {
                 this.state.register ?
-                  <Register /> :
+                  <Register
+                    onRegistry={(userData) => this.register(userData)}
+                   /> :
                   this.state.loggedUser ?
                     <div>Hola campeon</div> :
                     <Login 
