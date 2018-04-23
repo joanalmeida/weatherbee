@@ -40,7 +40,7 @@ class Login extends Component {
     handleSubmit(e) {
         //Default del submit es cargar otra pagina
         e.preventDefault()
-        if(this.props.email && this.props.password) {
+        if(this.state.email && this.state.password) {
             this.logIn()
         } else {
             //Present some error
@@ -66,7 +66,7 @@ class Login extends Component {
                                     type="password"
                                     onChange={this.handleChange('password')}
                                 />
-                                <Button type="submit" variant="raised" color="primary" onClick={this.logIn.bind(this)} style={ {width: '30%'} }>
+                                <Button type="submit" variant="raised" color="primary" style={ {width: '30%'} }>
                                     Login
                                 </Button>
                                 <Button color="secondary" onClick={this.handleRegistry.bind(this)}>

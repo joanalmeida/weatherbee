@@ -5,6 +5,14 @@ import TextField from 'material-ui/TextField';
 import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
 
+const styles = {
+    form: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+    }
+}
+
 class Register extends Component {
     constructor(props) {
         super(props)
@@ -30,7 +38,7 @@ class Register extends Component {
     handleSubmit(e) {
         //Default del submit es cargar otra pagina
         e.preventDefault()
-        if(this.props.email && this.props.password) {
+        if(this.state.email && this.state.password) {
             this.register()
         } else {
             //Present some error
@@ -42,31 +50,34 @@ class Register extends Component {
         return (
             <Paper style={ {textAlign: "center", marginTop: "20px"} }>
                 <Typography variant="title">Register</Typography>
-                <form onSubmit={this.handleSubmit.bind(this)}>
                     <Grid container spacing={16} justify="center">
                         <Grid item xs={8}>
-                            <TextField fullWidth
-                                id="name"
-                                label="Name"
-                                onChange={this.handleChange('name')}
-                            />
-                            <TextField fullWidth
-                                id="email"
-                                label="Email"
-                                onChange={this.handleChange('email')}
-                            />
-                            <TextField fullWidth
-                                id="password"
-                                label="Password"
-                                type="password"
-                                onChange={this.handleChange('password')}
-                            />
-                            <Button type="submit" variant="raised" color="primary" onClick={this.register.bind(this)}>
-                                Register
-                            </Button>
+                            <form onSubmit={this.handleSubmit.bind(this)} style={ styles.form }>
+                                <TextField fullWidth
+                                    id="name"
+                                    label="Name"
+                                    onChange={this.handleChange('name')}
+                                />
+                                <TextField fullWidth
+                                    id="email"
+                                    label="Email"
+                                    onChange={this.handleChange('email')}
+                                />
+                                <TextField fullWidth
+                                    id="password"
+                                    label="Password"
+                                    type="password"
+                                    onChange={this.handleChange('password')}
+                                />
+                                <Button type="submit" variant="raised" color="primary" style={ {width: '30%'} }>
+                                    Register
+                                </Button>
+                                <Button color="secondary" onClick={this.props.onBack}>
+                                    Cancel
+                                </Button>
+                            </form>
                         </Grid>
                     </Grid>
-                </form>
             </Paper>
         )
     }
