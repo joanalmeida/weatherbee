@@ -8,6 +8,7 @@ import teal from 'material-ui/colors/teal';
 import Header from './Components/Header/Header';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
+import Board from './Components/Board/Board';
 
 import Grid from 'material-ui/Grid';
 
@@ -79,6 +80,12 @@ class App extends Component {
     })
   }
 
+  hideRegister() {
+    this.setState(...this.state, {
+      register: false
+    })
+  }
+
   render() {
     let title = this.state.loggedUser ? this.state.user.name + "'s Board" : "weatherBee";
 
@@ -92,9 +99,10 @@ class App extends Component {
                 this.state.register ?
                   <Register
                     onRegistry={(userData) => this.register(userData)}
+                    onBack={() => this.hideRegister()}
                    /> :
                   this.state.loggedUser ?
-                    <div>Hola campeon</div> :
+                    <Board userId={this.state.user.id}/> :
                     <Login 
                       onLogin={(user) => this.login(user)}
                       onRegistry={this.showRegister.bind(this)}
