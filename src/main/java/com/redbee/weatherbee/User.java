@@ -21,6 +21,7 @@ public class User {
     @JsonIgnore
     private String password;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable( name = "user_location",
                 joinColumns = @JoinColumn(name = "user_id"),
