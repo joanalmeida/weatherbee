@@ -1,11 +1,8 @@
 package com.redbee.weatherbee;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,6 +13,14 @@ public class Location {
     @Column(name = "location_id")
     private Long id;
     private String name;
+    private String imgUrl;
+
+    @Embedded
+    private Condition condition;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<Forecast> forecasts;
 
     private Location() {}
 
