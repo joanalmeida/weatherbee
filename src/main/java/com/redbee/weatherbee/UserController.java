@@ -56,10 +56,10 @@ public class UserController {
     }
 
     @CrossOrigin
-    @RequestMapping(method = RequestMethod.DELETE)
-    public ResponseEntity<Set<Location>> deleteUsersLocation(@PathVariable("id") Long userId, @RequestBody Location location) {
+    @RequestMapping(value = "/{locationid}", method = RequestMethod.DELETE)
+    public ResponseEntity<Set<Location>> deleteUsersLocation(@PathVariable("id") Long userId, @PathVariable("locationid") Long locationId) {
         User foundUser = userRepository.findById(userId);
-        Location existentLocation = locationRepository.findByName(location.getName());
+        Location existentLocation = locationRepository.findById(locationId);
         Set<Location> locations = foundUser.getLocations();
         if (existentLocation != null) {
             locations.remove(existentLocation);

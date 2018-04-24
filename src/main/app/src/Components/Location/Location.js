@@ -4,14 +4,18 @@ import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 
 class Location extends Component {
+    handleRemove() {
+        this.props.onDelete(this.props.location.id)
+    }
+
     render() {
-        let { img, name, condition } = this.props.location
+        let { imgUrl, name, condition } = this.props.location
         return (
             <Fragment>
                 <Card>
                     <CardMedia
                         style={ {paddingTop: '50%'} }
-                        image={img}
+                        image={imgUrl}
                         title={name}
                     />
                     <CardContent>
@@ -32,7 +36,7 @@ class Location extends Component {
                         <Button size="small" color="primary">
                             Forecast
                         </Button>
-                        <Button size="small" color="primary" onClick={this.props.onDelete}>
+                        <Button size="small" color="primary" onClick={this.handleRemove.bind(this)}>
                             Remove
                         </Button>
                     </CardActions>
