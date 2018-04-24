@@ -1,7 +1,7 @@
 package com.redbee.weatherbee;
 
-import java.util.Set;
+import java.util.List;
 
 public interface LocationRepositoryCustom {
-    Set<String> getAllLocationsNames();
+    List<String> getAllLocationsNames();
 }

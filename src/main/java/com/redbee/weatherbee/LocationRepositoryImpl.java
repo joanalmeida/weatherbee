@@ -2,7 +2,8 @@ package com.redbee.weatherbee;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class LocationRepositoryImpl implements LocationRepositoryCustom {
@@ -11,9 +12,9 @@ public class LocationRepositoryImpl implements LocationRepositoryCustom {
     LocationRepository locationRepository;
 
     @Override
-    public Set<String> getAllLocationsNames() {
+    public List<String> getAllLocationsNames() {
         Set<Location> locations = locationRepository.findAll();
-        Set<String> names = new HashSet<>();
+        List<String> names = new ArrayList<>();
         for (Location loc : locations) {
             names.add(loc.getName());
         }
