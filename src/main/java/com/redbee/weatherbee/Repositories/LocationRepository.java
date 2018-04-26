@@ -1,5 +1,6 @@
-package com.redbee.weatherbee;
+package com.redbee.weatherbee.Repositories;
 
+import com.redbee.weatherbee.Entities.Location;
 import org.springframework.data.repository.Repository;
 
 import java.util.Set;

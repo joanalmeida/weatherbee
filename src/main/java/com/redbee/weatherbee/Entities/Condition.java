@@ -1,4 +1,4 @@
-package com.redbee.weatherbee;
+package com.redbee.weatherbee.Entities;
 
 import lombok.Data;
 import javax.persistence.Embeddable;

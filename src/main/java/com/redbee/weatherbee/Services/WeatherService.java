@@ -1,7 +1,11 @@
-package com.redbee.weatherbee;
+package com.redbee.weatherbee.Services;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.redbee.weatherbee.Entities.Condition;
+import com.redbee.weatherbee.Entities.Forecast;
+import com.redbee.weatherbee.Entities.Location;
+import com.redbee.weatherbee.Repositories.ForecastRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

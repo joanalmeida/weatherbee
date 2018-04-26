@@ -1,4 +1,4 @@
-package com.redbee.weatherbee;
+package com.redbee.weatherbee.Entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 

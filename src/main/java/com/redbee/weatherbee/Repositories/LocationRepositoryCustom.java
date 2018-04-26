@@ -1,4 +1,4 @@
-package com.redbee.weatherbee;
+package com.redbee.weatherbee.Repositories;
 
 import java.util.List;
 

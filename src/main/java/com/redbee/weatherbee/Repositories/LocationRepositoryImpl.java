@@ -1,5 +1,8 @@
-package com.redbee.weatherbee;
+package com.redbee.weatherbee.Repositories;
 
+import com.redbee.weatherbee.Entities.Location;
+import com.redbee.weatherbee.Repositories.LocationRepository;
+import com.redbee.weatherbee.Repositories.LocationRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;

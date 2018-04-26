@@ -1,5 +1,9 @@
-package com.redbee.weatherbee;
+package com.redbee.weatherbee.Controllers;
 
+import com.redbee.weatherbee.Entities.Location;
+import com.redbee.weatherbee.Repositories.LocationRepository;
+import com.redbee.weatherbee.Entities.User;
+import com.redbee.weatherbee.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

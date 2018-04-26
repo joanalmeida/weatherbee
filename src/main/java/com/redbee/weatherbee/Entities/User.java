@@ -1,7 +1,8 @@
-package com.redbee.weatherbee;
+package com.redbee.weatherbee.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.redbee.weatherbee.Entities.Location;
 import lombok.Data;
 
 import javax.persistence.*;

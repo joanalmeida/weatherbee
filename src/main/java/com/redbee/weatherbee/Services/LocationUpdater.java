@@ -1,5 +1,10 @@
-package com.redbee.weatherbee;
+package com.redbee.weatherbee.Services;
 
+import com.redbee.weatherbee.Entities.Forecast;
+import com.redbee.weatherbee.Entities.Location;
+import com.redbee.weatherbee.Repositories.ForecastRepository;
+import com.redbee.weatherbee.Repositories.LocationRepository;
+import com.redbee.weatherbee.Services.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -20,8 +25,9 @@ public class LocationUpdater {
     @Autowired
     private WeatherService weatherService;
 
-    //20 min
-    @Scheduled(fixedDelay = 1200000, initialDelay = 10000)
+    //20 min -> 1200000
+    //4hrs -> 14400000
+    @Scheduled(fixedDelay = 14400000, initialDelay = 10000)
     public void updateLocations() {
         //Getting All location names
         System.out.println("----------------------");

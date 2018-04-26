@@ -1,4 +1,4 @@
-package com.redbee.weatherbee;
+package com.redbee.weatherbee.Entities;
 
 public class LocationDTO {
     //Add public to allow Jackson serialization
