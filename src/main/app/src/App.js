@@ -93,7 +93,7 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
         <Fragment>
           <Header title={title}/>
-          <Grid container spacing={24} justify="center">
+          <Grid container justify="center">
             <Grid item xs={12} sm={8} style={ {padding: "0px 20px"} }>
               {
                 this.state.register ?

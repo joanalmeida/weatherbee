@@ -8,6 +8,10 @@ class Location extends Component {
         this.props.onDelete(this.props.location.id)
     }
 
+    handleForecast() {
+        this.props.onForecast(this.props.location.id)
+    }
+
     render() {
         let { imgUrl, name, condition } = this.props.location
         return (
@@ -33,7 +37,7 @@ class Location extends Component {
                         </div>
                     </CardContent>
                     <CardActions>
-                        <Button size="small" color="primary">
+                        <Button size="small" color="primary" onClick={this.handleForecast.bind(this)}>
                             Forecast
                         </Button>
                         <Button size="small" color="primary" onClick={this.handleRemove.bind(this)}>
