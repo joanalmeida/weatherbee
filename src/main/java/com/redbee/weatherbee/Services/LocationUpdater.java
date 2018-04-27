@@ -35,7 +35,7 @@ public class LocationUpdater {
     //10 min -> 600000
     //20 min -> 1200000
     //4hrs -> 14400000
-    @Scheduled(fixedDelay = 60000, initialDelay = 10000)
+    @Scheduled(fixedDelay = 120000, initialDelay = 10000)
     public void updateLocations() {
         //Getting All location names
         System.out.println("----------------------");
