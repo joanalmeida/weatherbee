@@ -44,6 +44,7 @@ class Board extends Component {
             openModal: false,
             location: '',
             locations: [],
+            livefeed: false,
             showForecast: false,
             currentForecast: [],
             openSnackbar: false,
