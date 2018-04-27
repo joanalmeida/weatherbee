@@ -18,7 +18,6 @@ spring.datasource.password=PASSWORD
 Desde el root de la app, ejecutar el siguiente comando
 ```sh
 mvn clean package -Dmaven.test.skip=true
-java -jar -Dspring.profiles.active=demo target/weatherbee-0.0.1-SNAPSHOT.jar
 ```
 
 Si se quiere persistir la data, correr con el profile de demo
