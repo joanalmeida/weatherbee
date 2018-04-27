@@ -24,22 +24,10 @@ public class DatabaseLoader implements CommandLineRunner{
 
     @Override
     public void run(String... strings) throws Exception {
-        /*
-        Location buenosAires = new Location("Buenos Aires");
-        locationRepository.save(buenosAires);
-
-        Location newYork = new Location("New York");
-        locationRepository.save(newYork);
-
-        User joan = new User("joan", "joan.almeida90@gmail.com", "321pepe");
-        joan.getLocations().add(buenosAires);
-        userRepository.save(joan);
-
-        User pedro = new User("pedro", "pedro.sondeos@gmail.com", "pepe123");
-        pedro.getLocations().add(buenosAires);
-        pedro.getLocations().add(newYork);
-        userRepository.save(pedro);
-        */
+        //No crear nada si ya existen datos
+        if (locationRepository.findAll().size() > 0) {
+            return;
+        }
 
         System.out.println("Saving initial dummy data");
 
@@ -51,18 +39,20 @@ public class DatabaseLoader implements CommandLineRunner{
         newYork.setImgUrl("https://www.housingwire.com/ext/resources/images/editorial/A-New-Big-Images/states/New-York-City.jpg?1453402066");
         locationRepository.save(newYork);
 
+        Location paris = new Location("Paris");
+        paris.setImgUrl("http://europeanbusinessmagazine.com/wp-content/uploads/2017/07/paris.jpg");
+        locationRepository.save(paris);
+
+        Location vancouver = new Location("Vancouver");
+        vancouver.setImgUrl("http://res.cloudinary.com/simpleview/image/upload/v1486505969/clients/vancouverbc/Aerial_Sunset_Vancouver_d3_copy_1bb86ed0-1edc-4cda-841d-0b033ca0bb72.jpg");
+        locationRepository.save(vancouver);
+
+        Location losAngeles = new Location("Los Angeles");
+        losAngeles.setImgUrl("https://www.visittheusa.co/sites/default/files/styles/hero_m_1300x700/public/images/hero_media_image/2016-10/HERO%201_LosAngeles_EDITORIAL_shutterstock_334078379_CROP_Web72DPI.jpg?itok=9FPADeDn");
+        locationRepository.save(losAngeles);
+
         User joan = new User("joan", "joan.almeida90@gmail.com", "321pepe");
         joan.getLocations().add(buenosAires);
         userRepository.save(joan);
-
-        /*
-        Set<Location> locations = weatherService.getUpdatedLocations();
-        for (Location loc : locations) {
-            locationRepository.save(loc);
-        }
-        System.out.println("All Locations: ");
-        System.out.println(locationRepository.findAll());
-        */
-        //System.out.println(weatherService.callYahooApi());
     }
 }

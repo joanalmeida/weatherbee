@@ -13,7 +13,8 @@ class Location extends Component {
     }
 
     render() {
-        let { imgUrl, name, condition } = this.props.location
+        let { imgUrl, name, condition, updatedAt } = this.props.location
+        updatedAt = new Date(updatedAt).toLocaleString()
         return (
             <Fragment>
                 <Card>
@@ -35,6 +36,9 @@ class Location extends Component {
                         <div>
                             {condition.text}
                         </div>
+                        <Typography color="textSecondary">
+                            Last update: {updatedAt}
+                        </Typography>
                     </CardContent>
                     <CardActions>
                         <Button size="small" color="primary" onClick={this.handleForecast.bind(this)}>

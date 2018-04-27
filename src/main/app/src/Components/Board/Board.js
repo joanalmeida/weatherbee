@@ -1,6 +1,11 @@
 import React, { Component, Fragment } from 'react'
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
+import Switch from 'material-ui/Switch';
+import { FormGroup, FormControlLabel } from 'material-ui/Form';
+import Snackbar from 'material-ui/Snackbar';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 import axios from 'axios';
 import config from '../../config';
@@ -8,6 +13,10 @@ import config from '../../config';
 import Location from '../Location/Location';
 import LocationSelect from './LocationSelection';
 import Forecast from './Forecast';
+
+import SockJs from 'sockjs-client';
+//import Stomp from 'stompjs';
+import Stomp from '@stomp/stompjs';
 
 const forecastSort = (a, b) => {
     if(new Date(a.date) > new Date(b.date)) {
@@ -22,8 +31,7 @@ const forecastSort = (a, b) => {
 const styles = {
     buttonRow: {
         display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
         marginTop: '20px'
     }
 }
@@ -37,7 +45,9 @@ class Board extends Component {
             location: '',
             locations: [],
             showForecast: false,
-            currentForecast: []
+            currentForecast: [],
+            openSnackbar: false,
+            snackbarMsg: ''
         }
         this.closeDialog = this.closeDialog.bind(this)
         this.openDialog = this.openDialog.bind(this)
@@ -47,13 +57,17 @@ class Board extends Component {
         this.forecastBack = this.forecastBack.bind(this)
         this.openModal = this.openModal.bind(this)
         this.closeModal = this.closeModal.bind(this)
+        this.startLiveFeed = this.startLiveFeed.bind(this)
+        this.processLiveFeed = this.processLiveFeed.bind(this)
+        this.handleLifeFeed = this.handleLifeFeed.bind(this)
+        this.closeSnackbar = this.closeSnackbar.bind(this)
+
+        this.socket;
     }
 
     componentDidMount() {
         axios.get(config.baseUrl + "api/user/" + this.props.userId + "/location")
         .then(resp => {
-            console.log("Las loc del user: ")
-            console.log(resp.data)
             this.setState({locations: resp.data})
         })
         .catch(err => {
@@ -73,20 +87,19 @@ class Board extends Component {
         axios.post(config.baseUrl + "api/user/" + this.props.userId + "/location", {
             name: locName
         }).then(resp => {
-            //Mostrar el snackbar
-            console.log("Se agrego " + locName + " correctamente")
-            this.setState({locations: resp.data})
+            this.setState({
+                locations: resp.data,
+                snackbarMsg: "Se agrego " + locName + " a tus ciudades",
+                openSnackbar: true
+            })
         }).catch(err => {
             console.error(err)
         })
     }
 
     removeLocation(locId) {
-        console.log("Remove loc: " + locId)
         axios.delete(config.baseUrl + "api/user/" + this.props.userId + "/location/" + locId)
         .then(resp => {
-            //Mostrar el snackbar
-            console.log("Se elimino la loc con id " + locId + " correctamente")
             this.setState({locations: resp.data})
         }).catch(err => {
             console.error(err)
@@ -94,7 +107,6 @@ class Board extends Component {
     }
 
     getForecast(locId) {
-        console.log("Conseguir el forecast de: " + locId)
         axios.get(config.baseUrl + "api/location/" + locId + "/forecast")
         .then(resp => {
             resp.data.sort(forecastSort);
@@ -114,6 +126,59 @@ class Board extends Component {
 
     closeModal = () => {
         this.setState({openModal: false})
+    }
+
+    handleLifeFeed = () => {
+        if(this.state.livefeed) {
+            this.socket.close()
+            //Reinicio el socket
+            this.socket = null;
+        } else {
+            this.startLiveFeed()
+        }
+    }
+
+    startLiveFeed = () => {
+        console.log("Starting live feed...")
+        if(!this.socket) {
+            this.socket = SockJs('livefeed')
+        }
+        let stompClient = Stomp.over(this.socket)
+        stompClient.debug = () => {} //Disable horrible debug msgs
+
+        stompClient.connect({}, (frame) => {
+            stompClient.subscribe(config.baseUrl + 'topic/updateLocation', this.processLiveFeed);
+        }, (err) => {
+            this.setState({
+                livefeed: false,
+                snackbarMsg: "Se perdio la conexion en vivo",
+                openSnackbar: true
+            })
+        });
+        
+        this.setState({livefeed: true})
+    }
+
+    processLiveFeed(feed) {
+        let updatedLocations = []
+        JSON.parse(feed.body).forEach(loc => {
+            let existentLoc = this.state.locations.find((currentLoc) => {
+                return loc.id === currentLoc.id;
+            })
+            if(existentLoc){
+                updatedLocations.push(loc)
+            }
+        })
+
+        this.setState({
+            locations: updatedLocations,
+            snackbarMsg: "Se actualizaron todas las ciudades",
+            openSnackbar: true
+        })
+    }
+
+    closeSnackbar() {
+        this.setState({openSnackbar: false})
     }
 
     render() {
@@ -136,9 +201,41 @@ class Board extends Component {
         ) : (
             <Fragment>
                 <div style={ styles.buttonRow }>
+                    <FormGroup>
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    checked={this.state.livefeed}
+                                    onChange={this.handleLifeFeed}
+                                    value="livefeed"
+                                />
+                            }
+                            label="Live feed"
+                        />
+                    </FormGroup>
                     <Button variant="fab" color="primary" aria-label="add" onClick={this.openDialog}>
                         <AddIcon />
                     </Button>
+                    <Snackbar
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left',
+                        }}
+                        open={this.state.openSnackbar}
+                        autoHideDuration={6000}
+                        onClose={this.closeSnackbar}
+                        message={this.state.snackbarMsg}
+                        action={
+                            <IconButton
+                                key="close"
+                                aria-label="Close"
+                                color="inherit"
+                                onClick={this.closeSnackbar}
+                                >
+                                <CloseIcon />
+                            </IconButton>
+                        }
+                    />
                 </div>
                 <LocationSelect
                     openDialog={this.state.openDialog}
@@ -146,7 +243,9 @@ class Board extends Component {
                     addLocation={this.addLocation}
                 >
                 </LocationSelect>
-                <div>{userLocations}</div>
+                <div style={ {marginBottom: '30px'} }>
+                    {userLocations}
+                </div>
             </Fragment>
         );
 

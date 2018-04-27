@@ -6,9 +6,11 @@ import com.redbee.weatherbee.Repositories.ForecastRepository;
 import com.redbee.weatherbee.Repositories.LocationRepository;
 import com.redbee.weatherbee.Services.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,9 +27,15 @@ public class LocationUpdater {
     @Autowired
     private WeatherService weatherService;
 
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
+
+    //1 min -> 60000
+    //2 min -> 120000
+    //10 min -> 600000
     //20 min -> 1200000
     //4hrs -> 14400000
-    @Scheduled(fixedDelay = 14400000, initialDelay = 10000)
+    @Scheduled(fixedDelay = 60000, initialDelay = 10000)
     public void updateLocations() {
         //Getting All location names
         System.out.println("----------------------");
@@ -49,6 +57,8 @@ public class LocationUpdater {
     }
 
     private void updateLocations(Set<Location> locations) {
+        Set<Location> updatedLocs = new HashSet<>();
+        Date now = new Date();
         for (Location loc : locations) {
             //Siempre existe
             Location existentLocation = locationRepository.findByName(loc.getName());
@@ -60,7 +70,12 @@ public class LocationUpdater {
             }
             existentLocation.setForecasts(savedForecasts);
             existentLocation.setCondition(loc.getCondition());
-            locationRepository.save(existentLocation);
+            //No pude hacer funcionar el PreUpdate, so...
+            existentLocation.setUpdatedAt(now);
+            existentLocation = locationRepository.save(existentLocation);
+            updatedLocs.add(existentLocation);
+            //Refactor
         }
+        applicationEventPublisher.publishEvent(new LocationEvent(this, updatedLocs));
     }
 }
