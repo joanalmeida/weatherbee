@@ -1,0 +1,32 @@
+Arguments: 
+  /home/jalmeida/.nvm/versions/node/v8.9.1/bin/node /home/jalmeida/.nvm/versions/node/v8.9.1/bin/yarn start
+
+PATH: 
+  /home/jalmeida/.sdkman/candidates/gradle/current/bin:/home/jalmeida/.nvm/versions/node/v8.9.1/bin:/home/jalmeida/usefulscripts:/home/jalmeida/.config/composer/vendor/bin:/home/jalmeida/.composer/vendor/bin:/opt/lampp/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/jalmeida/android/android-sdk-linux/tools:/home/jalmeida/android/android-sdk-linux/platform-tools:/opt/maven/apache-maven-3.3.9/bin
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  8.9.1
+
+Platform: 
+  linux x64
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Couldn't find a package.json file in "/home/jalmeida/Documentos/weatherbee"
+      at new MessageError (/home/jalmeida/.nvm/versions/node/v8.9.1/lib/node_modules/yarn/lib/cli.js:186:110)
+      at /home/jalmeida/.nvm/versions/node/v8.9.1/lib/node_modules/yarn/lib/cli.js:40048:15
+      at Generator.next (<anonymous>)
+      at step (/home/jalmeida/.nvm/versions/node/v8.9.1/lib/node_modules/yarn/lib/cli.js:98:30)
+      at /home/jalmeida/.nvm/versions/node/v8.9.1/lib/node_modules/yarn/lib/cli.js:109:13
+      at <anonymous>

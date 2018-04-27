@@ -4,11 +4,14 @@
   "private": true,
   "dependencies": {
     "@material-ui/icons": "^1.0.0-beta.43",
+    "@stomp/stompjs": "^4.0.2",
     "axios": "^0.18.0",
     "material-ui": "^1.0.0-beta.41",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "sockjs-client": "^1.1.4",
+    "stompjs": "^2.3.3"
   },
   "scripts": {
     "start": "react-scripts start",
