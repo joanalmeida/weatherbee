@@ -5,10 +5,10 @@ import './App.css';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import blue from 'material-ui/colors/blue';
 import teal from 'material-ui/colors/teal';
-import Header from './Components/Header/Header';
-import Login from './Components/Login/Login';
-import Register from './Components/Register/Register';
-import Board from './Components/Board/Board';
+import Header from './Components/Header';
+import Login from './Components/Login';
+import Register from './Components/Register';
+import Board from './Components/Board';
 
 import Grid from 'material-ui/Grid';
 
@@ -29,22 +29,6 @@ class App extends Component {
       register: false,
       user: {}
     }
-  }
-
-  componentDidMount() {
-    /*
-    axios.get(config.baseUrl + "locations")
-    .then(data => {
-      console.log(data.locations);
-      this.setState(...this.state, {
-        fetchingLocations: false,
-        locations: this.state.locations.concat(data.locations)
-      })
-    })
-    .catch(err => {
-      console.error("Hubo un error en la conexion");
-    });
-    */
   }
 
   login(userData) {

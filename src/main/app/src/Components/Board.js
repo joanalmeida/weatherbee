@@ -8,9 +8,9 @@ import IconButton from 'material-ui/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 import axios from 'axios';
-import config from '../../config';
+import config from '../config';
 
-import Location from '../Location/Location';
+import Location from './Location';
 import LocationSelect from './LocationSelection';
 import Forecast from './Forecast';
 
