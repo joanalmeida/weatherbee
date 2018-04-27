@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -40,5 +37,17 @@ public class LocationController {
     public ResponseEntity<Set<Forecast>> getForecast(@PathVariable("id") Long id) {
         Set<Forecast> forecasts = locationRepository.findById(id).getForecasts();
         return new ResponseEntity<>(forecasts, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/api/location", method = RequestMethod.POST)
+    public ResponseEntity<Location> addLocation(@RequestBody Location location) {
+        Location existentLocation = locationRepository.findByName(location.getName());
+        if(existentLocation != null) {
+            return new ResponseEntity<>(existentLocation, HttpStatus.CONFLICT);
+        } else {
+            Location newLocation = locationRepository.save(location);
+            return new ResponseEntity<>(newLocation, HttpStatus.OK);
+        }
     }
 }
